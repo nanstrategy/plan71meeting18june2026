@@ -241,7 +241,7 @@ textarea.form-control{resize:vertical;min-height:80px}
 <div class="toast" id="toast"></div>
 
 <script>
-const GAS_URL = 'https://script.google.com/macros/s/AKfycbzlgC9iyU3M099tP65UJFZAg1AcknI0ZV-vc8OtVzLjR4t6m6vn7pSnrJrN1JuJNGJGlQ/exec';
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbySC1Ey6EbO4MGYvPdGD1gVwLBD-1J6znaKBhCeqdaDfvrqaAm-pxXQrdlgmR2CgsP1ZQ/exec';
 let attendance = null;
 
 function selectAtt(val) {
@@ -323,8 +323,12 @@ async function submitForm() {
   };
 
   try {
-    const url = GAS_URL + '?' + new URLSearchParams(payload).toString();
-    await fetch(url, { method: 'GET', mode: 'no-cors' });
+    await fetch(GAS_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'text/plain' },
+      body: JSON.stringify(payload)
+    });
     setLoading(false);
     showSuccess(payload);
   } catch(err) {
